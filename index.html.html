@@ -22,7 +22,6 @@ tailwind.config={theme:{extend:{
   colors:{
     ink:{DEFAULT:'#111820',2:'#151F27',3:'#1B2730',4:'#202D37',5:'#263640'},
     silver:{DEFAULT:'#B7C4CC',light:'#D4DDE2'},
-    champagne:'#C5B79C',
     ivory:'#F1F3F2',
     mist:'#AEB8BD'
   },
@@ -35,7 +34,6 @@ tailwind.config={theme:{extend:{
   --bg:#111820;--bg2:#151F27;--bg3:#1B2730;--card:#202D37;--hi:#263640;
   --text:#F1F3F2;--text2:#AEB8BD;
   --accent:#B7C4CC;--accent-l:#D4DDE2;
-  --champ:#C5B79C;
   --border:rgba(220,230,235,0.08);
   --border-hi:rgba(183,196,204,0.35);
 }
@@ -43,13 +41,12 @@ tailwind.config={theme:{extend:{
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
 body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;font-weight:400;overflow-x:hidden;letter-spacing:0;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
 section[id]{scroll-margin-top:80px}
-
 .serif{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;letter-spacing:-0.01em}
 .serif-i{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400}
 .label{font-family:'Inter',sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.4em;text-transform:uppercase;color:var(--accent)}
 h1,h2,h3{font-weight:500}
 
-/* ===== SHARP IMAGES — no crop, breathing room ===== */
+/* ===== SHARP IMAGES ===== */
 .img-crisp{
   width:100%;height:100%;
   object-fit:contain;
@@ -58,8 +55,6 @@ h1,h2,h3{font-weight:500}
   image-rendering:auto;
   -webkit-backface-visibility:hidden;
   backface-visibility:hidden;
-  transform:translate3d(0,0,0);
-  will-change:auto;
 }
 
 /* Buttons */
@@ -72,7 +67,7 @@ h1,h2,h3{font-weight:500}
 .btn-arrow:hover::after{transform:translateX(6px)}
 @media(max-width:640px){.btn{padding:16px 24px;font-size:10.5px;min-height:48px}}
 
-/* ===== HEADER ===== */
+/* HEADER */
 .hdr{position:fixed;top:0;left:0;right:0;z-index:60;transition:all .45s cubic-bezier(.2,.8,.2,1)}
 .hdr-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px 32px;border-bottom:1px solid transparent;transition:all .45s cubic-bezier(.2,.8,.2,1)}
 .hdr.scrolled{background:rgba(17,24,32,.9);-webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);border-bottom:1px solid var(--border);box-shadow:0 8px 32px -16px rgba(0,0,0,.6)}
@@ -85,40 +80,43 @@ h1,h2,h3{font-weight:500}
 .nav-link::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
 .nav-link:hover::after{transform:scaleX(1)}
 
-/* Custom cursor — desktop only */
 .cursor-dot{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;width:6px;height:6px;background:var(--text);border-radius:50%;transform:translate(-50%,-50%);transition:width .35s cubic-bezier(.2,.8,.2,1),height .35s cubic-bezier(.2,.8,.2,1),background .35s;mix-blend-mode:difference}
 .cursor-dot.hover{width:64px;height:64px;background:var(--accent)}
 .cursor-label{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;font-family:Inter,sans-serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#0D141B;font-weight:600;transform:translate(-50%,-50%);opacity:0;transition:opacity .3s}
 .cursor-label.show{opacity:1}
 @media(max-width:1024px),(hover:none){.cursor-dot,.cursor-label{display:none!important}}
 
-/* Section tones */
 .tone-1{background:var(--bg)}
 .tone-2{background:var(--bg2)}
 .tone-3{background:var(--bg3)}
 
-/* ===== PRODUCT CARD ===== */
+/* ===== PRODUCT CARD — full width, no outer padding, minimal inner gaps ===== */
 .p-card{
   position:relative;
   background:var(--card);
-  border:1px solid var(--border);
+  border:none;
   overflow:hidden;
-  transition:border-color .5s cubic-bezier(.2,.8,.2,1),background .5s,transform .5s cubic-bezier(.2,.8,.2,1);
+  transition:background .5s,transform .5s cubic-bezier(.2,.8,.2,1);
   will-change:transform;
+  display:flex;
+  flex-direction:column;
 }
-.p-card:hover{border-color:var(--border-hi);background:#243440}
+.p-card:hover{background:#243440}
 .p-media{
   position:relative;
   overflow:hidden;
   background:radial-gradient(55% 50% at 50% 42%,rgba(183,196,204,.08),transparent 70%),linear-gradient(180deg,#232F39,#18222B);
   display:flex;align-items:center;justify-content:center;
+  flex:1;
 }
+/* NO internal padding now — image fills the container, watch shows via object-fit:contain */
 .p-media img{
   width:100%;height:100%;
   object-fit:contain;
   object-position:center;
   transition:transform .9s cubic-bezier(.2,.8,.2,1);
   transform:scale(1);
+  padding:clamp(14px,2vw,28px);
   -webkit-backface-visibility:hidden;
   backface-visibility:hidden;
 }
@@ -135,15 +133,15 @@ h1,h2,h3{font-weight:500}
 .mq-item::after{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:.5}
 @keyframes mqScroll{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 
-/* Wave strip */
+/* Wave strip — edge to edge, no side padding */
 .wave-sec{position:relative;overflow:hidden;padding:60px 0;background:var(--bg2)}
-.wave-outer{width:100%;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.wave-track{display:flex;gap:20px;padding:0 20px;width:max-content;will-change:transform;align-items:center}
-.wave-item{position:relative;width:170px;height:230px;flex:0 0 auto;overflow:hidden;border:1px solid var(--border);background:radial-gradient(55% 50% at 50% 42%,rgba(183,196,204,.06),transparent 70%),linear-gradient(180deg,#232F39,#18222B);transform:translate3d(0,var(--y,0px),0);will-change:transform;transition:border-color .4s;display:flex;align-items:center;justify-content:center;padding:16px}
+.wave-outer{width:100%;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.wave-track{display:flex;gap:14px;padding:0;width:max-content;will-change:transform;align-items:center}
+.wave-item{position:relative;width:170px;height:230px;flex:0 0 auto;overflow:hidden;border:1px solid var(--border);background:radial-gradient(55% 50% at 50% 42%,rgba(183,196,204,.06),transparent 70%),linear-gradient(180deg,#232F39,#18222B);transform:translate3d(0,var(--y,0px),0);will-change:transform;transition:border-color .4s;display:flex;align-items:center;justify-content:center}
 .wave-item:hover{border-color:var(--border-hi)}
-.wave-item img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
-@media (min-width:640px){.wave-item{width:210px;height:280px;padding:20px}}
-@media (min-width:1024px){.wave-item{width:240px;height:320px;padding:24px}}
+.wave-item img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;padding:14px}
+@media (min-width:640px){.wave-item{width:210px;height:280px}.wave-item img{padding:20px}}
+@media (min-width:1024px){.wave-item{width:240px;height:320px}.wave-item img{padding:24px}}
 
 /* FAQ */
 .faq{border-bottom:1px solid var(--border)}
@@ -166,7 +164,6 @@ h1,h2,h3{font-weight:500}
 .modal[aria-hidden="false"] .modal-card{transform:none}
 @media(max-width:640px){.modal{padding:0;align-items:flex-end}.modal-card{padding:28px 20px calc(28px + env(safe-area-inset-bottom));border-radius:0;max-width:100%;border-left:none;border-right:none;border-bottom:none;max-height:95dvh}}
 
-/* Fields */
 .field{width:100%;background:transparent;border:none;border-bottom:1px solid var(--border);padding:14px 0;color:var(--text);font-size:16px;font-family:Inter,sans-serif;transition:border-color .3s;border-radius:0;min-height:44px}
 .field::placeholder{color:rgba(174,184,189,.45)}
 .field:focus{outline:none;border-color:var(--accent)}
@@ -214,13 +211,14 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .sec-pad{padding-left:clamp(18px,3vw,48px);padding-right:clamp(18px,3vw,48px)}
 @media (min-width:1440px){.sec-pad{padding-left:56px;padding-right:56px}}
 
-/* Mobile tap targets */
+/* Hero inner padding — full width but text has comfortable padding */
+.hero-text-pad{padding-left:clamp(20px,4vw,72px);padding-right:clamp(20px,4vw,72px)}
+
 @media(max-width:640px){
   button,a{-webkit-tap-highlight-color:transparent}
   .size-chip{padding:10px 16px;font-size:12.5px;min-width:58px}
 }
 
-/* Reduced motion */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
   .mq-track{animation:none}
@@ -289,8 +287,7 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
   <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(65% 55% at 70% 42%,rgba(183,196,204,.08),transparent 65%),linear-gradient(180deg,#111820 0%,#151F27 100%)"></div>
 
   <div class="relative grid lg:grid-cols-2 min-h-[100svh]">
-    <!-- LEFT — Text -->
-    <div class="flex flex-col justify-center px-6 sm:px-10 lg:pl-[clamp(40px,7vw,120px)] lg:pr-10 pt-32 sm:pt-36 lg:pt-0 pb-12 lg:pb-0 z-10">
+    <div class="flex flex-col justify-center hero-text-pad pt-32 sm:pt-36 lg:pt-0 pb-12 lg:pb-0 z-10">
       <div class="max-w-[620px]">
         <div class="anim-fade d-1 flex items-center gap-5 mb-7 sm:mb-10">
           <span class="anim-line d-2 divider block"></span>
@@ -320,12 +317,11 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
       </div>
     </div>
 
-    <!-- RIGHT — Hero watch: sharp, breathing room -->
-    <div class="relative flex items-center justify-center min-h-[52svh] sm:min-h-[58svh] lg:min-h-[100svh] px-6 pb-14 lg:p-0">
-      <div class="anim-scale d-3 relative w-full h-full flex items-center justify-center p-8 sm:p-12 lg:p-16 xl:p-20">
+    <div class="relative flex items-center justify-center min-h-[52svh] sm:min-h-[58svh] lg:min-h-[100svh]">
+      <div class="anim-scale d-3 relative w-full h-full flex items-center justify-center p-4 sm:p-8 lg:p-10 xl:p-14">
         <img src="https://res.cloudinary.com/jfqrpdw4/image/upload/w_1000,q_auto:best,f_auto,dpr_auto,c_fit/v1790192384/Watch_9.webp" alt="7Even Sovereign timepiece" width="1000" height="1000" fetchpriority="high" decoding="async" class="img-crisp max-w-full max-h-full" style="filter:drop-shadow(0 40px 60px rgba(0,0,0,.55)) drop-shadow(0 15px 30px rgba(0,0,0,.4))">
       </div>
-      <div class="absolute bottom-5 right-5 lg:bottom-10 lg:right-10 hidden sm:flex flex-col items-center gap-3 text-[10px] tracking-[.3em] uppercase text-mist/60">
+      <div class="absolute bottom-5 right-5 lg:bottom-8 lg:right-8 hidden sm:flex flex-col items-center gap-3 text-[10px] tracking-[.3em] uppercase text-mist/60">
         <span>Scroll</span>
         <span class="scroll-ind"></span>
       </div>
@@ -395,20 +391,19 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
       </div>
     </div>
 
-    <!-- Featured image — sharp, breathing room -->
     <div class="lg:col-span-7 relative order-1 lg:order-2 min-h-[50svh] lg:min-h-[80svh]" style="background:radial-gradient(55% 50% at 50% 45%,rgba(183,196,204,.08),transparent 70%),linear-gradient(180deg,#1B2730,#151F27)">
-      <div class="absolute inset-0 flex items-center justify-center p-10 lg:p-20 xl:p-24">
+      <div class="absolute inset-0 flex items-center justify-center p-6 lg:p-16 xl:p-20">
         <img src="https://res.cloudinary.com/jfqrpdw4/image/upload/w_900,q_auto:best,f_auto,dpr_auto,c_fit/v1790192381/Watch_2.webp" alt="Featured timepiece — 7Even Gilt Sport" loading="lazy" decoding="async" class="img-crisp max-w-full max-h-full" style="filter:drop-shadow(0 40px 60px rgba(0,0,0,.55))">
       </div>
-      <div class="absolute top-6 left-6 lg:top-10 lg:left-10 text-[10px] tracking-[.35em] uppercase" style="color:var(--accent)">Featured Timepiece</div>
-      <div class="absolute bottom-6 right-6 lg:bottom-10 lg:right-10 text-[10px] tracking-[.35em] uppercase text-mist/70">07E-02</div>
+      <div class="absolute top-6 left-6 lg:top-8 lg:left-8 text-[10px] tracking-[.35em] uppercase" style="color:var(--accent)">Featured Timepiece</div>
+      <div class="absolute bottom-6 right-6 lg:bottom-8 lg:right-8 text-[10px] tracking-[.35em] uppercase text-mist/70">07E-02</div>
     </div>
   </div>
 </section>
 
-<!-- COLLECTION -->
+<!-- COLLECTION — truly full width, 0 padding, side by side -->
 <section id="collection" class="tone-2 border-t border-white/[.05]">
-  <div class="sec-pad pt-20 sm:pt-28 lg:pt-36 pb-14 lg:pb-16">
+  <div class="px-6 sm:px-10 lg:px-14 pt-20 sm:pt-28 lg:pt-36 pb-14 lg:pb-16" style="max-width:100%">
     <div class="max-w-[1600px] mx-auto">
       <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-8">
         <div>
@@ -428,8 +423,8 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
     </div>
   </div>
 
-  <!-- FULL-WIDTH grid: 1 col mobile / 2 tablet / 4 desktop, 1px gap -->
-  <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px" style="background:var(--border)"></div>
+  <!-- FULL WIDTH — no outer padding, no gaps between cards -->
+  <div id="product-grid" class="grid grid-cols-2 lg:grid-cols-4 w-full"></div>
 </section>
 
 <!-- CINEMATIC BREAK -->
@@ -474,10 +469,10 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
       </div>
     </div>
     <div class="lg:col-span-7 relative min-h-[50svh] lg:min-h-[80svh]" style="background:radial-gradient(55% 50% at 50% 45%,rgba(183,196,204,.07),transparent 70%),linear-gradient(180deg,#1B2730,#151F27)">
-      <div class="absolute inset-0 flex items-center justify-center p-10 lg:p-20 xl:p-24">
+      <div class="absolute inset-0 flex items-center justify-center p-6 lg:p-16 xl:p-20">
         <img src="https://res.cloudinary.com/jfqrpdw4/image/upload/w_900,q_auto:best,f_auto,dpr_auto,c_fit/v1790192381/Watch_1.webp" alt="7Even Classic Steel SEIKO" loading="lazy" decoding="async" class="img-crisp max-w-full max-h-full" style="filter:drop-shadow(0 40px 60px rgba(0,0,0,.55))">
       </div>
-      <div class="absolute bottom-6 right-6 lg:bottom-10 lg:right-10 text-[10px] tracking-[.35em] uppercase text-mist/60">7E-01 · SEIKO</div>
+      <div class="absolute bottom-6 right-6 lg:bottom-8 lg:right-8 text-[10px] tracking-[.35em] uppercase text-mist/60">7E-01 · SEIKO</div>
     </div>
   </div>
 </section>
@@ -524,7 +519,7 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
   </div>
 </section>
 
-<!-- GALLERY -->
+<!-- GALLERY — full width 0 gap -->
 <section class="tone-1 border-t border-white/[.05]">
   <div class="sec-pad py-16 sm:py-20 lg:py-24">
     <div class="max-w-[1600px] mx-auto">
@@ -537,7 +532,7 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
       </h3>
     </div>
   </div>
-  <div id="gallery" class="grid auto-rows-[200px] grid-cols-2 gap-px sm:auto-rows-[260px] md:grid-cols-4 lg:auto-rows-[320px]" style="background:var(--border)"></div>
+  <div id="gallery" class="grid auto-rows-[220px] grid-cols-2 gap-0 sm:auto-rows-[280px] md:grid-cols-4 lg:auto-rows-[360px]"></div>
 </section>
 
 <!-- FAQ -->
@@ -701,8 +696,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
   var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
   var waUrl=function(t){return 'https://wa.me/'+WA+'?text='+encodeURIComponent(t)};
   function openWA(t){var w=window.open(waUrl(t),'_blank');if(!w)window.location.href=waUrl(t)}
-
-  /* Crisp: c_fit, best quality, auto dpr */
   function cld(url,w){return url.replace('/upload/','/upload/w_'+w+',q_auto:best,f_auto,dpr_auto,c_fit/')}
 
   var PRODUCTS=[
@@ -732,29 +725,27 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
   var state={size:42};
   var byId=function(id){return PRODUCTS.filter(function(p){return p.id===id})[0]||PRODUCTS[0]};
 
-  /* PRODUCT GRID — full width, 1px gap, watch small inside */
+  /* PRODUCT GRID — full width, 0 outer padding, side by side (2 mobile / 4 desktop) */
   $('#product-grid').innerHTML=PRODUCTS.map(function(p,i){
     var msg='Hello 7Even, please share the price for *'+p.brand+' '+p.model+'* (code '+p.id+').';
-    var eager=i<4?'loading="eager" fetchpriority="high"':'loading="lazy" fetchpriority="low"';
-    var tagHtml=p.tag==='HOT'?'<div class="absolute left-4 top-4 z-10 text-[9px] tracking-[.4em] uppercase px-2.5 py-1" style="background:var(--accent);color:#0D141B;font-weight:600">HOT</div>':p.tag==='NEW'?'<div class="absolute left-4 top-4 z-10 text-[9px] tracking-[.4em] uppercase px-2.5 py-1" style="border:1px solid var(--accent);color:var(--accent)">NEW</div>':'';
+    var eager=i<8?'loading="eager" fetchpriority="high"':'loading="lazy" fetchpriority="low"';
+    var tagHtml=p.tag==='HOT'?'<div class="absolute left-3 top-3 sm:left-4 sm:top-4 z-10 text-[9px] tracking-[.4em] uppercase px-2.5 py-1" style="background:var(--accent);color:#0D141B;font-weight:600">HOT</div>':p.tag==='NEW'?'<div class="absolute left-3 top-3 sm:left-4 sm:top-4 z-10 text-[9px] tracking-[.4em] uppercase px-2.5 py-1" style="border:1px solid var(--accent);color:var(--accent)">NEW</div>':'';
     return '<article class="p-card reveal" data-cursor="view">'+
-      '<div class="p-media relative aspect-[4/5]">'+
-        '<div class="absolute inset-0 p-8 sm:p-10 lg:p-14 xl:p-16 flex items-center justify-center">'+
-          '<img src="'+cld(p.photo,700)+'" alt="'+p.brand+' '+p.model+' '+p.finish+' watch" '+eager+' decoding="async" class="img-crisp max-w-full max-h-full">'+
-        '</div>'+
+      '<div class="p-media relative" style="aspect-ratio:4/5">'+
+        '<img src="'+cld(p.photo,700)+'" alt="'+p.brand+' '+p.model+' '+p.finish+' watch" '+eager+' decoding="async" class="img-crisp">'+
         tagHtml+
-        '<div class="absolute right-4 top-4 z-10 text-[9px] tracking-[.35em] uppercase text-mist/70">'+p.id+'</div>'+
+        '<div class="absolute right-3 top-3 sm:right-4 sm:top-4 z-10 text-[9px] tracking-[.35em] uppercase text-mist/70">'+p.id+'</div>'+
       '</div>'+
-      '<div class="p-info p-6 lg:p-7">'+
-        '<div class="flex items-baseline justify-between gap-4 mb-3">'+
-          '<span class="text-[10px] tracking-[.4em] uppercase" style="color:var(--accent)">'+p.brand+'</span>'+
-          '<span class="text-[10px] tracking-[.3em] uppercase text-mist/60">'+p.finish+'</span>'+
+      '<div class="p-info p-4 sm:p-5 lg:p-6">'+
+        '<div class="flex items-baseline justify-between gap-3 mb-2.5">'+
+          '<span class="text-[9.5px] sm:text-[10px] tracking-[.4em] uppercase" style="color:var(--accent)">'+p.brand+'</span>'+
+          '<span class="text-[9.5px] sm:text-[10px] tracking-[.3em] uppercase text-mist/60">'+p.finish+'</span>'+
         '</div>'+
-        '<h3 class="serif text-[22px] sm:text-[24px] leading-tight text-ivory mb-3">'+p.model+'</h3>'+
-        '<p class="text-[12.5px] leading-[1.7] text-mist mb-6">'+p.desc+'</p>'+
-        '<div class="flex items-center justify-between gap-4 pt-5 border-t border-white/[.06]">'+
-          '<a href="'+waUrl(msg)+'" target="_blank" rel="noopener" class="text-[10.5px] tracking-[.3em] uppercase text-ivory hover:text-silver transition-colors flex items-center gap-2" data-cursor="link">DM for Price <span class="info-arrow">→</span></a>'+
-          '<button data-action="open-order" data-id="'+p.id+'" class="text-[10.5px] tracking-[.3em] uppercase text-mist hover:text-silver transition-colors" data-cursor="link">Order</button>'+
+        '<h3 class="serif text-[19px] sm:text-[22px] lg:text-[24px] leading-tight text-ivory mb-2.5">'+p.model+'</h3>'+
+        '<p class="text-[12px] sm:text-[12.5px] leading-[1.7] text-mist mb-4 sm:mb-5">'+p.desc+'</p>'+
+        '<div class="flex items-center justify-between gap-3 pt-4 border-t border-white/[.06]">'+
+          '<a href="'+waUrl(msg)+'" target="_blank" rel="noopener" class="text-[10px] sm:text-[10.5px] tracking-[.28em] uppercase text-ivory hover:text-silver transition-colors flex items-center gap-1.5 sm:gap-2" data-cursor="link">DM for Price <span class="info-arrow">→</span></a>'+
+          '<button data-action="open-order" data-id="'+p.id+'" class="text-[10px] sm:text-[10.5px] tracking-[.28em] uppercase text-mist hover:text-silver transition-colors" data-cursor="link">Order</button>'+
         '</div>'+
       '</div>'+
     '</article>';
@@ -800,7 +791,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
     if(waveActive) waveRAF=requestAnimationFrame(tickWave);
   }
 
-  /* STARS + REVIEWS */
   function stars(n,c){var s='';for(var i=0;i<5;i++)s+='<svg class="'+(c||'star')+'" viewBox="0 0 24 24" fill="'+(i<n?'#B7C4CC':'none')+'" stroke="#B7C4CC" stroke-width="1.2" stroke-linejoin="round"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>';return s}
   $('#avg-stars').innerHTML=stars(5);
 
@@ -819,13 +809,12 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
     '</figure>';
   }).join('');
 
-  /* GALLERY */
+  /* GALLERY — full width, 0 gap */
   $('#gallery').innerHTML=PRODUCTS.slice(0,8).map(function(p,i){
     var spans=['col-span-2 row-span-2','','','','','col-span-2','',''];
-    return '<div class="reveal-scale relative overflow-hidden '+(spans[i]||'')+'" style="background:radial-gradient(55% 50% at 50% 42%,rgba(183,196,204,.06),transparent 70%),linear-gradient(180deg,#232F39,#18222B)" data-cursor="view"><div class="absolute inset-0 p-6 sm:p-8 lg:p-12 flex items-center justify-center"><img src="'+cld(p.photo,500)+'" alt="'+p.brand+' '+p.model+'" loading="lazy" decoding="async" class="img-crisp max-w-full max-h-full" style="filter:drop-shadow(0 20px 30px rgba(0,0,0,.5))"></div><div class="absolute left-4 sm:left-5 bottom-4 sm:bottom-5 text-[10px] tracking-[.35em] uppercase" style="color:var(--accent);text-shadow:0 2px 10px rgba(0,0,0,.9)">'+p.brand+'</div></div>';
+    return '<div class="reveal-scale relative overflow-hidden '+(spans[i]||'')+'" style="background:radial-gradient(55% 50% at 50% 42%,rgba(183,196,204,.06),transparent 70%),linear-gradient(180deg,#232F39,#18222B)" data-cursor="view"><div class="absolute inset-0 p-4 sm:p-6 lg:p-8 flex items-center justify-center"><img src="'+cld(p.photo,500)+'" alt="'+p.brand+' '+p.model+'" loading="lazy" decoding="async" class="img-crisp max-w-full max-h-full" style="filter:drop-shadow(0 20px 30px rgba(0,0,0,.5))"></div><div class="absolute left-3 sm:left-5 bottom-3 sm:bottom-5 text-[10px] tracking-[.35em] uppercase" style="color:var(--accent);text-shadow:0 2px 10px rgba(0,0,0,.9)">'+p.brand+'</div></div>';
   }).join('');
 
-  /* MODALS */
   var toastT;
   function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('show')},3000)}
   var lastFocus=null;
@@ -833,7 +822,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
   function closeModals(){$$('.modal[aria-hidden="false"]').forEach(function(m){m.setAttribute('aria-hidden','true')});document.body.style.overflow='';if(lastFocus&&lastFocus.focus)lastFocus.focus()}
   document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeModals();closeChat()}});
 
-  /* SIZE GUIDE */
   var SIZES=[38,39,40,41,42,43,44],sizeDraft=state.size;
   var recSize=function(w){return Math.max(38,Math.min(44,Math.round(38+(w-14)*.923)))};
   function renderFit(){
@@ -849,7 +837,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
   $('#wrist').addEventListener('input',function(){sizeDraft=recSize(parseFloat(this.value));renderFit()});
   $('#size-chips').addEventListener('click',function(e){var b=e.target.closest('[data-size]');if(b){sizeDraft=+b.dataset.size;renderFit()}});
 
-  /* ORDER FORM */
   var F={product:$('#f-product'),size:$('#f-size'),qty:$('#f-qty'),name:$('#f-name'),phone:$('#f-phone'),city:$('#f-city'),address:$('#f-address')};
   F.product.innerHTML=PRODUCTS.map(function(p){return '<option value="'+p.id+'">'+p.brand+' — '+p.model+'</option>'}).join('');
   F.size.innerHTML=SIZES.map(function(s){return '<option value="'+s+'">'+s+' mm</option>'}).join('');
@@ -874,7 +861,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
   $('#order-form').addEventListener('submit',function(e){e.preventDefault();if(!validate())return;openWA(buildMsg());toast('Opening WhatsApp…');closeModals()});
   function openOrder(id){F.product.value=id||PRODUCTS[0].id;F.size.value=state.size;qty=1;updateOrder();openModal('order-modal')}
 
-  /* CHAT */
   $('#chat-quick').innerHTML=
     '<a href="'+waUrl('Hello 7Even, is the watch in stock?')+'" target="_blank" class="flex items-center justify-between gap-3 px-4 py-3 text-[12.5px] text-ivory hover:border-silver transition-colors" style="border:1px solid var(--border)">Is this watch in stock?<span style="color:var(--accent)">→</span></a>'+
     '<a href="'+waUrl('Hello 7Even, how long will delivery take?')+'" target="_blank" class="flex items-center justify-between gap-3 px-4 py-3 text-[12.5px] text-ivory hover:border-silver transition-colors" style="border:1px solid var(--border)">Delivery time?<span style="color:var(--accent)">→</span></a>'+
@@ -882,7 +868,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
   function closeChat(){$('#chat-panel').classList.remove('open');var cb=$('#chat-btn');if(cb)cb.setAttribute('aria-expanded','false')}
   function toggleChat(){var o=$('#chat-panel').classList.toggle('open');$('#chat-btn').setAttribute('aria-expanded',String(o))}
 
-  /* EVENTS */
   document.addEventListener('click',function(e){
     var el=e.target.closest('[data-action]');
     if(el){
@@ -899,19 +884,16 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
   function toggleMenu(){var m=$('#mobile-menu');m.classList.toggle('hidden');var o=!m.classList.contains('hidden');$('#menu-btn').setAttribute('aria-expanded',String(o))}
   function closeMenu(){var m=$('#mobile-menu');if(!m.classList.contains('hidden'))m.classList.add('hidden')}
 
-  /* HEADER SCROLL */
   var hdr=document.getElementById('hdr');
   var lastY=0,tickingH=false;
   function onScroll(){var y=window.scrollY;if(Math.abs(y-lastY)>4){if(y>40)hdr.classList.add('scrolled');else hdr.classList.remove('scrolled');lastY=y} tickingH=false}
   window.addEventListener('scroll',function(){if(!tickingH){requestAnimationFrame(onScroll);tickingH=true}},{passive:true});onScroll();
 
-  /* REVEAL */
   var io=new IntersectionObserver(function(entries){
     entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}});
   },{threshold:0.1,rootMargin:'0px 0px -60px 0px'});
   $$('.reveal, .reveal-scale').forEach(function(el){io.observe(el)});
 
-  /* WAVE ACTIVE — only when in viewport */
   if(waveSection && 'IntersectionObserver' in window){
     new IntersectionObserver(function(en){
       var v=en[0].isIntersecting;
@@ -920,7 +902,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
     },{threshold:0}).observe(waveSection);
   } else { waveActive=true; }
 
-  /* PARALLAX — respects reduced motion */
   var parallaxEls=$$('[data-parallax]');
   var reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(parallaxEls.length && !reduceMotion){
@@ -940,7 +921,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
     updateParallax();
   }
 
-  /* CUSTOM CURSOR — desktop only */
   var dot=$('#cursor-dot'),label=$('#cursor-label');
   var hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if(hasHover && dot && label){
@@ -959,7 +939,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
     });
   }
 
-  /* BOOT */
   function boot(){
     $('#yr').textContent=new Date().getFullYear();
     renderFit();updateOrder();
@@ -970,7 +949,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
     },150);
     window.addEventListener('scroll',updateWaveTargets,{passive:true});
     window.addEventListener('resize',function(){measureWave();updateWaveTargets()},{passive:true});
-    /* Recalculate on orientation change (mobile) */
     window.addEventListener('orientationchange',function(){setTimeout(function(){measureWave();updateWaveTargets()},200)});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
